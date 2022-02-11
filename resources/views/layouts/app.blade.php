@@ -10,6 +10,7 @@
     <link href="{{ asset('css/login/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/login/common.css') }}" rel="stylesheet">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="icon" href="{{ asset('images/logo.png') }}">
 	<link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&amp;display=swap" rel="stylesheet">
 	<link href="{{ asset('css/login/theme-03.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>

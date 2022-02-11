@@ -69,16 +69,7 @@ class DashboardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $status=$request->status;
-        if($status==1)
-        {
-            User::where('id',$id)->update(['active'=>0]);
-        }
-        else{
-            User::where('id',$id)->update(['active'=>1]);
-        }
-        return redirect('dashboard')->with('message',"User Status Update Successfully");
-        // return redirect()->url('dashboard')->with('message',"User Status Update Successfully");;
+
     }
 
     /**

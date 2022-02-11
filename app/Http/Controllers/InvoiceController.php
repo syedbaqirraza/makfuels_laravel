@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Invoice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
 {
@@ -25,7 +26,11 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        return view('admin.invoice');
+        $clients=DB::table('clients')
+        ->join('users','clients.user_id','=','users.id')
+        ->select('clients.*','users.*')
+        ->get();
+        return view('admin.invoice',compact('clients'));
     }
 
     /**
@@ -39,7 +44,8 @@ class InvoiceController extends Controller
         $validated = $request->validate([
             'invoice_type' => 'required',
             'invoice_description' => 'required',
-            'invoice_file' => 'required|mimes:pdf,xlx,csv'
+            'invoice_file' => 'required|mimes:pdf,xlx,csv',
+            'user_id' => 'required'
         ]);
 
 
@@ -54,12 +60,13 @@ class InvoiceController extends Controller
             $invoice = new Invoice([
                 'invoice_type'      =>  $request->get('invoice_type'),
                 'invoice_description'       =>  $request->get('invoice_description'),
-                'invoice_file'=>$image_name
+                'invoice_file'=>$image_name,
+                'user_id'=>$request->get('user_id')
             ]);
             $invoice->save();
         }
         $message="Upload Invoice SuccessFully";
-        return view('admin.invoice',compact('message'));
+        return redirect()->route('invoice.create')->with('message',$message);
 
     }
 

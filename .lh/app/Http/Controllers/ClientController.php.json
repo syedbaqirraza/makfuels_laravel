@@ -1,0 +1,134 @@
+{
+    "sourceFile": "app/Http/Controllers/ClientController.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 29,
+            "patches": [
+                {
+                    "date": 1644598134549,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1644598943015,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n      * @return \\Illuminate\\Http\\Response\n      */\n     public function index()\n     {\n-\n+        return view('admin.client');\n     }\n \n     /**\n      * Show the form for creating a new resource.\n@@ -22,9 +22,9 @@\n      * @return \\Illuminate\\Http\\Response\n      */\n     public function create()\n     {\n-        //\n+        return view('admin.create_client');\n     }\n \n     /**\n      * Store a newly created resource in storage.\n"
+                },
+                {
+                    "date": 1644600593395,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,12 @@\n <?php\n \n namespace App\\Http\\Controllers;\n \n+use Illuminate\\Auth\\Events\\Validated;\n use Illuminate\\Http\\Request;\n-\n+use Illuminate\\Support\\Facades\\Hash;\n+use Illuminate\\Support\\Facades\\Validator;\n class ClientController extends Controller\n {\n     /**\n      * Display a listing of the resource.\n@@ -33,9 +35,14 @@\n      * @return \\Illuminate\\Http\\Response\n      */\n     public function store(Request $request)\n     {\n-        //\n+        Validator::make($request, [\n+            'name' => ['required', 'string', 'max:255'],\n+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],\n+            'password' => ['required', 'string', 'min:8', 'confirmed'],\n+            'role' => ['required', 'string'],\n+        ]);\n     }\n \n     /**\n      * Display the specified resource.\n"
+                },
+                {
+                    "date": 1644600695353,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,10 +38,12 @@\n     {\n         Validator::make($request, [\n             'name' => ['required', 'string', 'max:255'],\n             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],\n-            'password' => ['required', 'string', 'min:8', 'confirmed'],\n-            'role' => ['required', 'string'],\n+            'phone' => ['required'],\n+            'location' => ['required'],\n+            'account_number' => ['required'],\n+            'address' => ['required'],\n         ]);\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1644600704380,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n      * @return \\Illuminate\\Http\\Response\n      */\n     public function store(Request $request)\n     {\n-        Validator::make($request, [\n+        $validate=Validator::make($request, [\n             'name' => ['required', 'string', 'max:255'],\n             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],\n             'phone' => ['required'],\n             'location' => ['required'],\n"
+                },
+                {
+                    "date": 1644600712709,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,8 +43,9 @@\n             'location' => ['required'],\n             'account_number' => ['required'],\n             'address' => ['required'],\n         ]);\n+        dd($validate);\n     }\n \n     /**\n      * Display the specified resource.\n"
+                },
+                {
+                    "date": 1644600828769,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,17 +35,17 @@\n      * @return \\Illuminate\\Http\\Response\n      */\n     public function store(Request $request)\n     {\n-        $validate=Validator::make($request, [\n+        $validatedData = $request->validate([\n             'name' => ['required', 'string', 'max:255'],\n             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],\n             'phone' => ['required'],\n             'location' => ['required'],\n             'account_number' => ['required'],\n             'address' => ['required'],\n         ]);\n-        dd($validate);\n+        dd($validatedData);\n     }\n \n     /**\n      * Display the specified resource.\n"
+                },
+                {
+                    "date": 1644600845666,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n             'location' => ['required'],\n             'account_number' => ['required'],\n             'address' => ['required'],\n         ]);\n-        dd($validatedData);\n+        dd($validatedData->name);\n     }\n \n     /**\n      * Display the specified resource.\n"
+                },
+                {
+                    "date": 1644600861966,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n             'location' => ['required'],\n             'account_number' => ['required'],\n             'address' => ['required'],\n         ]);\n-        dd($validatedData->name);\n+        dd($validatedData->['name']);\n     }\n \n     /**\n      * Display the specified resource.\n"
+                },
+                {
+                    "date": 1644600873560,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n             'location' => ['required'],\n             'account_number' => ['required'],\n             'address' => ['required'],\n         ]);\n-        dd($validatedData->['name']);\n+        dd($validatedData['name']);\n     }\n \n     /**\n      * Display the specified resource.\n"
+                },
+                {
+                    "date": 1644600896526,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,8 +43,9 @@\n             'location' => ['required'],\n             'account_number' => ['required'],\n             'address' => ['required'],\n         ]);\n+        DB::table('users')->\n         dd($validatedData['name']);\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1644601007473,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n namespace App\\Http\\Controllers;\n \n use Illuminate\\Auth\\Events\\Validated;\n use Illuminate\\Http\\Request;\n+use Illuminate\\Support\\Facades\\DB;\n use Illuminate\\Support\\Facades\\Hash;\n use Illuminate\\Support\\Facades\\Validator;\n class ClientController extends Controller\n {\n@@ -43,9 +44,11 @@\n             'location' => ['required'],\n             'account_number' => ['required'],\n             'address' => ['required'],\n         ]);\n-        DB::table('users')->\n+        DB::table('users')->insertGetId([\n+            \n+        ]);\n         dd($validatedData['name']);\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1644601127534,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,12 +44,15 @@\n             'location' => ['required'],\n             'account_number' => ['required'],\n             'address' => ['required'],\n         ]);\n+        $password='12345678';\n         DB::table('users')->insertGetId([\n-            \n+            'name'=>$validatedData['name'],\n+            'email'=>$validatedData['email'],\n+            'password'=>Hash::make($password),\n+            'role'=>'client',\n         ]);\n-        dd($validatedData['name']);\n     }\n \n     /**\n      * Display the specified resource.\n"
+                },
+                {
+                    "date": 1644601152952,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,8 +50,9 @@\n             'name'=>$validatedData['name'],\n             'email'=>$validatedData['email'],\n             'password'=>Hash::make($password),\n             'role'=>'client',\n+            'active'=>'0',\n         ]);\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1644601216972,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,15 +45,18 @@\n             'account_number' => ['required'],\n             'address' => ['required'],\n         ]);\n         $password='12345678';\n-        DB::table('users')->insertGetId([\n+        $user_id=DB::table('users')->insertGetId([\n             'name'=>$validatedData['name'],\n             'email'=>$validatedData['email'],\n             'password'=>Hash::make($password),\n             'role'=>'client',\n             'active'=>'0',\n         ]);\n+        DB::table('clients')->insert([\n+\n+        ]);\n     }\n \n     /**\n      * Display the specified resource.\n"
+                },
+                {
+                    "date": 1644601226187,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,13 @@\n             'role'=>'client',\n             'active'=>'0',\n         ]);\n         DB::table('clients')->insert([\n-\n+            'name'=>$validatedData['name'],\n+            'email'=>$validatedData['email'],\n+            'password'=>Hash::make($password),\n+            'role'=>'client',\n+            'active'=>'0',\n         ]);\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1644601258752,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,9 @@\n             'role'=>'client',\n             'active'=>'0',\n         ]);\n         DB::table('clients')->insert([\n-            'name'=>$validatedData['name'],\n+            'user_id'=>$user_id,\n             'email'=>$validatedData['email'],\n             'password'=>Hash::make($password),\n             'role'=>'client',\n             'active'=>'0',\n"
+                },
+                {
+                    "date": 1644601280824,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,15 +52,19 @@\n             'password'=>Hash::make($password),\n             'role'=>'client',\n             'active'=>'0',\n         ]);\n-        DB::table('clients')->insert([\n-            'user_id'=>$user_id,\n-            'email'=>$validatedData['email'],\n-            'password'=>Hash::make($password),\n-            'role'=>'client',\n-            'active'=>'0',\n-        ]);\n+        if($user_id!=null)\n+        {\n+            DB::table('clients')->insert([\n+                'user_id'=>$user_id,\n+                'email'=>$validatedData['email'],\n+                'password'=>Hash::make($password),\n+                'role'=>'client',\n+                'active'=>'0',\n+            ]);\n+        }\n+\n     }\n \n     /**\n      * Display the specified resource.\n"
+                },
+                {
+                    "date": 1644601304436,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n         if($user_id!=null)\n         {\n             DB::table('clients')->insert([\n                 'user_id'=>$user_id,\n-                'email'=>$validatedData['email'],\n+                'phone'=>$validatedData['phone'],\n                 'password'=>Hash::make($password),\n                 'role'=>'client',\n                 'active'=>'0',\n             ]);\n"
+                },
+                {
+                    "date": 1644601317378,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,9 +57,9 @@\n         {\n             DB::table('clients')->insert([\n                 'user_id'=>$user_id,\n                 'phone'=>$validatedData['phone'],\n-                'password'=>Hash::make($password),\n+                'location'=>$validatedData['location'],\n                 'role'=>'client',\n                 'active'=>'0',\n             ]);\n         }\n"
+                },
+                {
+                    "date": 1644601325564,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,8 +58,9 @@\n             DB::table('clients')->insert([\n                 'user_id'=>$user_id,\n                 'phone'=>$validatedData['phone'],\n                 'location'=>$validatedData['location'],\n+                'account_number'=>$validatedData['account_number'],\n                 'role'=>'client',\n                 'active'=>'0',\n             ]);\n         }\n"
+                },
+                {
+                    "date": 1644601346719,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,10 +59,9 @@\n                 'user_id'=>$user_id,\n                 'phone'=>$validatedData['phone'],\n                 'location'=>$validatedData['location'],\n                 'account_number'=>$validatedData['account_number'],\n-                'role'=>'client',\n-                'active'=>'0',\n+                'address'=>$validatedData['address'],\n             ]);\n         }\n \n     }\n"
+                },
+                {
+                    "date": 1644601404281,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,8 +62,10 @@\n                 'account_number'=>$validatedData['account_number'],\n                 'address'=>$validatedData['address'],\n             ]);\n         }\n+        $message=\"Add Client Successfully\";\n+        return view('admin.create_client',compact('message'));\n \n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1644601723820,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,9 +63,9 @@\n                 'address'=>$validatedData['address'],\n             ]);\n         }\n         $message=\"Add Client Successfully\";\n-        return view('admin.create_client',compact('message'));\n+        return redirect()->route('client.create')->with('message',$message);\n \n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1644604389086,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,12 @@\n      * @return \\Illuminate\\Http\\Response\n      */\n     public function index()\n     {\n+        DB::table('clients')\n+            ->join('users','clients.user_id','=','users.id')\n+            ->select('client.*','user.*')\n+            ->get();\n         return view('admin.client');\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1644604414147,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,13 +15,13 @@\n      * @return \\Illuminate\\Http\\Response\n      */\n     public function index()\n     {\n-        DB::table('clients')\n+        $client=DB::table('clients')\n             ->join('users','clients.user_id','=','users.id')\n             ->select('client.*','user.*')\n             ->get();\n-        return view('admin.client');\n+        return view('admin.client',compact('client'));\n     }\n \n     /**\n      * Show the form for creating a new resource.\n"
+                },
+                {
+                    "date": 1644604421027,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,13 +15,13 @@\n      * @return \\Illuminate\\Http\\Response\n      */\n     public function index()\n     {\n-        $client=DB::table('clients')\n+        $clients=DB::table('clients')\n             ->join('users','clients.user_id','=','users.id')\n             ->select('client.*','user.*')\n             ->get();\n-        return view('admin.client',compact('client'));\n+        return view('admin.client',compact('clients'));\n     }\n \n     /**\n      * Show the form for creating a new resource.\n"
+                },
+                {
+                    "date": 1644604430049,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n     public function index()\n     {\n         $clients=DB::table('clients')\n             ->join('users','clients.user_id','=','users.id')\n-            ->select('client.*','user.*')\n+            ->select('clients.*','users.*')\n             ->get();\n         return view('admin.client',compact('clients'));\n     }\n \n"
+                },
+                {
+                    "date": 1644609881825,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,12 @@\n             ->select('clients.*','users.*')\n             ->get();\n         return view('admin.client',compact('clients'));\n     }\n+    public function client_chart()\n+    {\n+        return view('admin.client_chart');\n+    }\n \n     /**\n      * Show the form for creating a new resource.\n      *\n"
+                },
+                {
+                    "date": 1644610057343,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,9 @@\n             ->select('clients.*','users.*')\n             ->get();\n         return view('admin.client',compact('clients'));\n     }\n+\n     public function client_chart()\n     {\n         return view('admin.client_chart');\n     }\n"
+                }
+            ],
+            "date": 1644598134549,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Http\\Controllers;\n\nuse Illuminate\\Http\\Request;\n\nclass ClientController extends Controller\n{\n    /**\n     * Display a listing of the resource.\n     *\n     * @return \\Illuminate\\Http\\Response\n     */\n    public function index()\n    {\n\n    }\n\n    /**\n     * Show the form for creating a new resource.\n     *\n     * @return \\Illuminate\\Http\\Response\n     */\n    public function create()\n    {\n        //\n    }\n\n    /**\n     * Store a newly created resource in storage.\n     *\n     * @param  \\Illuminate\\Http\\Request  $request\n     * @return \\Illuminate\\Http\\Response\n     */\n    public function store(Request $request)\n    {\n        //\n    }\n\n    /**\n     * Display the specified resource.\n     *\n     * @param  int  $id\n     * @return \\Illuminate\\Http\\Response\n     */\n    public function show($id)\n    {\n        //\n    }\n\n    /**\n     * Show the form for editing the specified resource.\n     *\n     * @param  int  $id\n     * @return \\Illuminate\\Http\\Response\n     */\n    public function edit($id)\n    {\n        //\n    }\n\n    /**\n     * Update the specified resource in storage.\n     *\n     * @param  \\Illuminate\\Http\\Request  $request\n     * @param  int  $id\n     * @return \\Illuminate\\Http\\Response\n     */\n    public function update(Request $request, $id)\n    {\n        //\n    }\n\n    /**\n     * Remove the specified resource from storage.\n     *\n     * @param  int  $id\n     * @return \\Illuminate\\Http\\Response\n     */\n    public function destroy($id)\n    {\n        //\n    }\n}\n"
+        }
+    ]
+}

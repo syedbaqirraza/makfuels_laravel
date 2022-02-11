@@ -51,7 +51,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Authentication forms">
     <meta name="author" content="Makfuels">
-
+     <link rel="icon" href="{{ asset('images/logo.png') }}">
 @yield('script')
 
 </head>
@@ -67,7 +67,13 @@
       <a class="mr-5 hover_text" href="{{ route('promotions') }}" style="cursor:pointer;">Promotions</a>
       <a class="mr-5 hover_text" href="{{ route('contact') }}" style="cursor:pointer;">Contact Us</a>
     </nav>
+    @auth
+    <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0" onclick="window.location.href='{{ url('/dashboard') }}'">Dashboard
+
+    @else
     <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0" onclick="window.location.href='{{ url('/login') }}'">Login
+
+    @endauth
       <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
         <path d="M5 12h14M12 5l7 7-7 7"></path>
       </svg>

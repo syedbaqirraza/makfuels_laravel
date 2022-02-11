@@ -4,7 +4,7 @@
 <div class="sidebar-header">
    <div class="text-center justify-content-between">
        <div class="logo">
-           <a href="index.html"><img src="{{asset('images/logo.jpg')}}" style="height:5rem !important;" alt="Logo" srcset=""></a>
+           <a href='{{ url('/dashboard') }}'><img src="{{asset('images/logo.jpg')}}" style="height:5rem !important;" alt="Logo" srcset=""></a>
        </div>
        <div class="toggler">
            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -25,26 +25,40 @@
                 </a>
             </li>
             <li class="sidebar-item  has-sub">
-                <a href="#" class='sidebar-link'>
-                    <i class="bi bi-stack"></i>
-                    <span>Users</span>
+                <a href="#" class='sidebar-link' style="background-color: #435ebe;">
+                    <i class="bi bi-stack text-white"></i>
+                    <span class="text-white">User</span>
                 </a>
-                <ul class="submenu ">
+                <ul class="submenu">
                     <li class="submenu-item ">
                         <a href="{{ url('users') }}">All Users</a>
                     </li>
                 </ul>
             </li>
             <li class="sidebar-item  has-sub">
-                <a href="#" class='sidebar-link'>
-                    <i class="bi bi-file-earmark-medical-fill"></i>
-                    <span>Invoice</span>
+                <a href="#" class='sidebar-link' style="background-color: #435ebe;">
+                    <i class="bi bi-stack color-white text-white" ></i>
+                    <span class="text-white">Client</span>
                 </a>
-                <ul class="submenu">
+                <ul class="submenu ">
                     <li class="submenu-item ">
-                        <a href="{{ url('invoice/create') }}">Upload Invoice</a>
+                        <a href="{{ route('client.create') }}">Add New Client</a>
                     </li>
                     <li class="submenu-item ">
+                        <a href="{{ route('client.index') }}">All Clients</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link' style="background-color: #435ebe;">
+                    <i class="bi bi-file-earmark-medical-fill text-white"></i>
+                    <span class="text-white">Invoice</span>
+                </a>
+                <ul class="submenu">
+                    <li class="submenu-item">
+                        <a href="{{ url('invoice/create') }}">Upload Invoice</a>
+                    </li>
+                    <li class="submenu-item">
                         <a href="{{ url('invoice') }}">All Invoice</a>
                     </li>
                 </ul>
@@ -52,8 +66,11 @@
             <li class="sidebar-item">
                 <form action="{{ url('/logout') }}" method="POST">
                 @csrf
-                    <button type="submit" class='w-100 btn btn-danger' style="text-align: start;"><i style="color:white;" class="bi bi-box-arrow-left" style="font-size:35px; font-weight:800; "></i> Signout</button>
+                    <button type="submit" class='w-100 btn' style="text-align: start; background-color: #435ebe; color:white;"><i class="bi bi-box-arrow-left" style="font-size:20px; font-weight:800;color:white;   margin: 7px 13px 0px 0px;"></i> Signout</button>
                 </form>
+            </li>
+            <li class="sidebar-item">
+                <button type="submit" onclick="window.location.href='{{ url('/') }}'" class='w-100 btn btn-info' style="text-align: start; background-color: #435ebe; color:white;"><i class="bi bi-box-arrow-left" style="font-size:20px; font-weight:800;color:white;   margin: 7px 13px 0px 0px;"></i>  Back To Website</button>
             </li>
         @elseif ($user_role->role=="employee")
             <li class="sidebar-item active ">
@@ -62,13 +79,13 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            <li class="sidebar-item  has-sub">
-                <a href="#" class='sidebar-link'>
-                    <i class="bi bi-file-earmark-medical-fill"></i>
-                    <span>Invoice</span>
+            <li class="sidebar-item has-sub">
+                <a href="#" class='sidebar-link' style="background-color: #435ebe;">
+                    <i class="bi bi-file-earmark-medical-fill text-white"></i>
+                    <span class="text-white">Invoice</span>
                 </a>
                 <ul class="submenu">
-                    <li class="submenu-item ">
+                    <li class="submenu-item " >
                         <a href="{{ url('invoice/create') }}">Upload Invoice</a>
                     </li>
                     <li class="submenu-item ">
@@ -79,10 +96,16 @@
             <li class="sidebar-item">
                 <form action="{{ url('/logout') }}" method="POST">
                 @csrf
-                    <button type="submit" class='w-100 btn btn-danger' style="text-align: start;"><i style="color:white;" class="bi bi-box-arrow-left" style="font-size:35px; font-weight:800; "></i> Signout</button>
+
+                    <button type="submit" class='w-100 btn' style="text-align: start; background-color: #435ebe; color:white;"><i class="bi bi-box-arrow-left" style="font-size:20px; font-weight:800;color:white;   margin: 7px 13px 0px 0px;"></i> Signout</button>
                 </form>
             </li>
-        @elseif ($user_role->role=="customer")
+            <li class="sidebar-item">
+
+                <button type="submit" onclick="window.location.href='{{ url('/') }}'" class='w-100 btn btn-info' style="text-align: start; background-color: #435ebe; color:white;"><i class="bi bi-box-arrow-left" style="font-size:20px; font-weight:800;color:white;   margin: 7px 13px 0px 0px;"></i>  Back To Website</button>
+
+        </li>
+        @elseif ($user_role->role=="client")
             <li class="sidebar-item active ">
                 <a href="{{ url('/dashboard') }}" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
@@ -90,17 +113,22 @@
                 </a>
             </li>
             <li class="sidebar-item  has-sub">
-                <a href="#" class='sidebar-link'>
-                    <i class="bi bi-file-earmark-medical-fill"></i>
-                    <span>Pricing</span>
+                <a href="#" class='sidebar-link' style="background-color: #435ebe">
+                    <i class="bi bi-file-earmark-medical-fill text-white"></i>
+                    <span class="text-white">Pricing</span>
                 </a>
             </li>
             <li class="sidebar-item">
                 <form action="{{ url('/logout') }}" method="POST">
                 @csrf
-                    <button type="submit" class='w-100 btn btn-danger' style="text-align: start;"><i style="color:white;" class="bi bi-box-arrow-left" style="font-size:35px; font-weight:800; "></i> Signout</button>
+                    <button type="submit" class='w-100 btn' style="text-align: start; background-color: #435ebe; color:white;"><i class="bi bi-box-arrow-left" style="font-size:20px; font-weight:800;color:white;   margin: 7px 13px 0px 0px;"></i> Signout</button>
                 </form>
             </li>
+            <li class="sidebar-item">
+
+                <button type="submit" onclick="window.location.href='{{ url('/') }}'" class='w-100 btn btn-info' style="text-align: start; background-color: #435ebe; color:white;"><i class="bi bi-box-arrow-left" style="font-size:20px; font-weight:800;color:white;   margin: 7px 13px 0px 0px;"></i>  Back To Website</button>
+
+        </li>
         @endif
    </ul>
 </div>

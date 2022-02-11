@@ -1,0 +1,18 @@
+{
+    "sourceFile": "database/migrations/2022_02_11_201855_add_user_id_to_invoices.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1644610772911,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1644610772911,
+            "name": "Commit-0",
+            "content": "<?php\n\nuse Illuminate\\Database\\Migrations\\Migration;\nuse Illuminate\\Database\\Schema\\Blueprint;\nuse Illuminate\\Support\\Facades\\Schema;\n\nclass AddUserIdToInvoices extends Migration\n{\n    /**\n     * Run the migrations.\n     *\n     * @return void\n     */\n    public function up()\n    {\n        Schema::table('invoices', function (Blueprint $table) {\n            $table->integer('user_id');\n        });\n    }\n\n    /**\n     * Reverse the migrations.\n     *\n     * @return void\n     */\n    public function down()\n    {\n        Schema::table('invoices', function (Blueprint $table) {\n            $table->dropColumn('user_id');\n        });\n    }\n}\n"
+        }
+    ]
+}

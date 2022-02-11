@@ -1,0 +1,50 @@
+{
+    "sourceFile": "database/migrations/2022_02_11_164503_clients.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 8,
+            "patches": [
+                {
+                    "date": 1644598046116,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1644598087603,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,10 +13,10 @@\n      */\n     public function up()\n     {\n         Schema::create('clients',function(Blueprint $table){\n-            $table->bigIncrements('id'),\n-            $table->string('');\n+            $table->id(),\n+            $table->string(''),\n         });\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1644598102621,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,10 +13,15 @@\n      */\n     public function up()\n     {\n         Schema::create('clients',function(Blueprint $table){\n-            $table->id(),\n-            $table->string(''),\n+            $table->id();\n+            $table->morphs('tokenable');\n+            $table->string('name');\n+            $table->string('token', 64)->unique();\n+            $table->text('abilities')->nullable();\n+            $table->timestamp('last_used_at')->nullable();\n+            $table->timestamps();\n         });\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1644598115639,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,14 +14,9 @@\n     public function up()\n     {\n         Schema::create('clients',function(Blueprint $table){\n             $table->id();\n-            $table->morphs('tokenable');\n-            $table->string('name');\n-            $table->string('token', 64)->unique();\n-            $table->text('abilities')->nullable();\n-            $table->timestamp('last_used_at')->nullable();\n-            $table->timestamps();\n+            $table->string('');\n         });\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1644598121106,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n      */\n     public function up()\n     {\n         Schema::create('clients',function(Blueprint $table){\n-            $table->id();\n+            $table->bigIncrements();\n             $table->string('');\n         });\n     }\n \n"
+                },
+                {
+                    "date": 1644599045106,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,10 +13,10 @@\n      */\n     public function up()\n     {\n         Schema::create('clients',function(Blueprint $table){\n-            $table->bigIncrements();\n-            $table->string('');\n+            $table->bigIncrements('id');\n+            $table->string('user_id');\n         });\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1644600108280,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,12 @@\n     {\n         Schema::create('clients',function(Blueprint $table){\n             $table->bigIncrements('id');\n             $table->string('user_id');\n+            $table->string('phone')->nullable();\n+            $table->string('location')->nullable();\n+            $table->string('account_number')->nullable();\n+            $table->string('address')->nullable();\n         });\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1644600151635,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,7 +29,8 @@\n      * @return void\n      */\n     public function down()\n     {\n-        //\n+        Schema::dropIfExists('clients');\n+\n     }\n }\n"
+                },
+                {
+                    "date": 1644600225539,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,7 +30,6 @@\n      */\n     public function down()\n     {\n         Schema::dropIfExists('clients');\n-\n     }\n }\n"
+                }
+            ],
+            "date": 1644598046116,
+            "name": "Commit-0",
+            "content": "<?php\n\nuse Illuminate\\Database\\Migrations\\Migration;\nuse Illuminate\\Database\\Schema\\Blueprint;\nuse Illuminate\\Support\\Facades\\Schema;\n\nclass Clients extends Migration\n{\n    /**\n     * Run the migrations.\n     *\n     * @return void\n     */\n    public function up()\n    {\n        Schema::create('clients',function(Blueprint $table){\n            $table->bigIncrements('id'),\n            $table->string('');\n        });\n    }\n\n    /**\n     * Reverse the migrations.\n     *\n     * @return void\n     */\n    public function down()\n    {\n        //\n    }\n}\n"
+        }
+    ]
+}

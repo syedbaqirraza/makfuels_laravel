@@ -21,15 +21,25 @@
                             <label for="basicInput">Select Invoice Type</label>
                             <select class="form-select" id="basicSelect" name="invoice_type">
                                 <option value="">Choose</option>
-                                <option value="eft">EFT</option>
-                                <option value="loss_run_report">Loss Run Report</option>
+                                <option value="Invoice">Invoice</option>
+                                <option value="EFT">EFT</option>
+                                <option value="Loss Run Report">Loss Run Report</option>
+                                <option value="Volume Report">Volume Report</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="basicInput">Select Location</label>
+                            <select class="form-select" id="basicSelect" name="user_id">
+                                <option value="">Choose</option>
+                                @foreach ($clients as $client)
+                                <option value="{{ $client->user_id }}">{{ $client->location}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="helpInputTop">Invoice Description</label>
                             <input type="text" class="form-control" id="helpInputTop" name="invoice_description">
                         </div>
-
                         <div class="form-group">
                             <label for="formFile" class="form-label">Select Invoice</label>
                             <input class="form-control" type="file" id="formFile" name="invoice_file">
@@ -46,12 +56,10 @@
                                 </ul>
                             </div>
                         @endif
-                        @if (isset($message))
+                        @if (session('message'))
                             <div class="alert alert-success">
                                 <ul>
-
-                                        <li>{{ $message }}</li>
-
+                                    <li>{{ session('message') }}</li>
                                 </ul>
                             </div>
                         @endif

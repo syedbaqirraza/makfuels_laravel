@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
@@ -40,3 +41,5 @@ Route::get('/contact', function () {
 Route::resource('dashboard', DashboardController::class);
 Route::resource('invoice', InvoiceController::class);
 Route::resource('users', UserController::class);
+Route::resource('client', ClientController::class);
+Route::get('/chart','App\Http\Controllers\ClientController@client_chart')->name('chart');

@@ -17,16 +17,13 @@
         <section class="section">
             <div class="card">
                 <div class="card-header">
-
                     @if (isset($message))
-                            <div class="alert alert-success">
-                                <ul>
-
-                                        <li>{{ $message }}</li>
-
-                                </ul>
-                            </div>
-                        @endif
+                        <div class="alert alert-success">
+                            <ul>
+                                <li>{{ $message }}</li>
+                            </ul>
+                        </div>
+                    @endif
                 </div>
                 <div class="card-body">
                     <table class="table table-striped" id="table1">
@@ -48,7 +45,7 @@
                                         <td>{{ $user->role }}</td>
                                         @if ($user->active==1)
                                             <td>
-                                                <form action="{{ url('dashboard/'.$user->id) }}" method="POST">
+                                                <form action="{{ url('users/'.$user->id) }}" method="POST">
                                                     @csrf
                                                     @method('PUT')
                                                     <input type="hidden" name="status" value="{{ $user->active }}">
@@ -57,7 +54,7 @@
                                             </td>
                                         @else
                                             <td>
-                                                <form action="{{ url('dashboard/'.$user->id) }}" method="POST">
+                                                <form action="{{ url('users/'.$user->id) }}" method="POST">
                                                     @csrf
                                                     @method('PUT')
                                                     <input type="hidden" name="status" value="{{ $user->active }}">

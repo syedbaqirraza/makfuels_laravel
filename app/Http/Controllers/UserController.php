@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users=User::all();
+        $users=User::where('role','!=','client')->get();
         return view('admin.user',compact('users'));
     }
 
@@ -70,7 +70,16 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $status=$request->status;
+        if($status==1)
+        {
+            User::where('id',$id)->update(['active'=>0]);
+        }
+        else{
+            User::where('id',$id)->update(['active'=>1]);
+        }
+        return redirect('users')->with('message',"User Status Update Successfully");
+        // return redirect()->url('dashboard')->with('message',"User Status Update Successfully");;
     }
 
     /**
