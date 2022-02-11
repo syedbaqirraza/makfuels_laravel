@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,3 +39,4 @@ Route::get('/contact', function () {
 
 Route::resource('dashboard', DashboardController::class);
 Route::resource('invoice', InvoiceController::class);
+Route::resource('users', UserController::class);

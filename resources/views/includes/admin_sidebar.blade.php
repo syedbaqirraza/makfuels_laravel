@@ -13,52 +13,95 @@
 </div>
 <div class="sidebar-menu">
    <ul class="menu">
-
-       <li
-           class="sidebar-item active ">
-           <a href="{{ url('/dashboard') }}" class='sidebar-link'>
-               <i class="bi bi-grid-fill"></i>
-               <span>Dashboard</span>
-           </a>
-       </li>
-
-       <li class="sidebar-item  has-sub">
-           <a href="#" class='sidebar-link'>
-               <i class="bi bi-stack"></i>
-               <span>Users</span>
-           </a>
-           <ul class="submenu ">
-               <li class="submenu-item ">
-                   <a href="{{ url('dashboard') }}">All Users</a>
-               </li>
-
-           </ul>
-       </li>
-       <li class="sidebar-item  has-sub">
-           <a href="#" class='sidebar-link'>
-               <i class="bi bi-file-earmark-medical-fill"></i>
-               <span>Invoice</span>
-           </a>
-           <ul class="submenu">
-               <li class="submenu-item ">
-                   <a href="{{ url('invoice/create') }}">Upload Invoice</a>
-               </li>
-               <li class="submenu-item ">
-                   <a href="{{ url('invoice') }}">All Invoice</a>
-               </li>
-           </ul>
-       </li>
-       <li class="sidebar-item">
-           <form action="{{ url('/logout') }}" method="POST">
-            @csrf
-                <button type="submit" class='w-100 btn btn-danger' style="text-align: start;"><i style="color:white;" class="bi bi-box-arrow-left" style="font-size:35px; font-weight:800; "></i> Signout</button>
-            </form>
-       </li>
-
-
-
-
-
+       @php
+            $id=Auth::id();
+            $user_role=DB::table('users')->where('id',$id)->first();
+       @endphp
+        @if ($user_role->role=="admin")
+            <li class="sidebar-item active ">
+                <a href="{{ url('/dashboard') }}" class='sidebar-link'>
+                    <i class="bi bi-grid-fill"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-stack"></i>
+                    <span>Users</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="{{ url('users') }}">All Users</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-file-earmark-medical-fill"></i>
+                    <span>Invoice</span>
+                </a>
+                <ul class="submenu">
+                    <li class="submenu-item ">
+                        <a href="{{ url('invoice/create') }}">Upload Invoice</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="{{ url('invoice') }}">All Invoice</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="sidebar-item">
+                <form action="{{ url('/logout') }}" method="POST">
+                @csrf
+                    <button type="submit" class='w-100 btn btn-danger' style="text-align: start;"><i style="color:white;" class="bi bi-box-arrow-left" style="font-size:35px; font-weight:800; "></i> Signout</button>
+                </form>
+            </li>
+        @elseif ($user_role->role=="employee")
+            <li class="sidebar-item active ">
+                <a href="{{ url('/dashboard') }}" class='sidebar-link'>
+                    <i class="bi bi-grid-fill"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-file-earmark-medical-fill"></i>
+                    <span>Invoice</span>
+                </a>
+                <ul class="submenu">
+                    <li class="submenu-item ">
+                        <a href="{{ url('invoice/create') }}">Upload Invoice</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="{{ url('invoice') }}">All Invoice</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="sidebar-item">
+                <form action="{{ url('/logout') }}" method="POST">
+                @csrf
+                    <button type="submit" class='w-100 btn btn-danger' style="text-align: start;"><i style="color:white;" class="bi bi-box-arrow-left" style="font-size:35px; font-weight:800; "></i> Signout</button>
+                </form>
+            </li>
+        @elseif ($user_role->role=="customer")
+            <li class="sidebar-item active ">
+                <a href="{{ url('/dashboard') }}" class='sidebar-link'>
+                    <i class="bi bi-grid-fill"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-file-earmark-medical-fill"></i>
+                    <span>Pricing</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <form action="{{ url('/logout') }}" method="POST">
+                @csrf
+                    <button type="submit" class='w-100 btn btn-danger' style="text-align: start;"><i style="color:white;" class="bi bi-box-arrow-left" style="font-size:35px; font-weight:800; "></i> Signout</button>
+                </form>
+            </li>
+        @endif
    </ul>
 </div>
 <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>

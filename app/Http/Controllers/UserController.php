@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class DashboardController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('admin.index');
+        $users=User::all();
+        return view('admin.user',compact('users'));
     }
 
     /**
@@ -57,7 +58,7 @@ class DashboardController extends Controller
      */
     public function edit($id)
     {
-
+        //
     }
 
     /**
@@ -69,16 +70,7 @@ class DashboardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $status=$request->status;
-        if($status==1)
-        {
-            User::where('id',$id)->update(['active'=>0]);
-        }
-        else{
-            User::where('id',$id)->update(['active'=>1]);
-        }
-        return redirect('dashboard')->with('message',"User Status Update Successfully");
-        // return redirect()->url('dashboard')->with('message',"User Status Update Successfully");;
+        //
     }
 
     /**

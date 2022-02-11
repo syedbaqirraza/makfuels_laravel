@@ -10,6 +10,7 @@
             <p class="mb-10">Use unique credentials to create account.</p>
         </div>
         <form method="POST" action="{{ route('register') }}">
+            @csrf
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -40,6 +41,26 @@
                     <input id="email" type="email" placeholder="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                     @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text">
+                            <img src="https://img.icons8.com/fluency-systems-regular/20/000000/user-tag.png"/>
+                        </span>
+                    </div>
+                    <select name="role" id="" placeholder="role" class="form-control @error('role') is-invalid @enderror">
+                        <option value="">Choose Role</option>
+                        <option value="admin">Admin</option>
+                        <option value="employee">Employee</option>
+                        <option value="customer">Customer</option>
+                    </select>                   
+                    @error('role')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
