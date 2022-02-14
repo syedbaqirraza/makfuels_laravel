@@ -48,23 +48,23 @@
 
 
                     <div class="col-4 col-lg-4 col-md-4">
-                        <a href="{{ route('chart') }}">
-                        <div class="card">
-                            <div class="card-body px-3 py-4-5">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="stats-icon blue">
-                                            <i class="iconly-boldProfile"></i>
+                        <a href="{{ url('VolumeChart') }}">
+                            <div class="card">
+                                <div class="card-body px-3 py-4-5">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="stats-icon blue">
+                                                <i class="iconly-boldProfile"></i>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h6 class="text-muted font-semibold">Volume Chart</h6>
-                                        <h6 class="font-extrabold mb-0">183.000</h6>
+                                        <div class="col-md-8">
+                                            <h6 class="text-muted font-semibold">Volume Chart</h6>
+                                            <h6 class="font-extrabold mb-0">183.000</h6>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
                     </div>
 
 
