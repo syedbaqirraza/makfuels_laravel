@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 
 class VolumeChartController extends Controller
@@ -51,23 +52,8 @@ class VolumeChartController extends Controller
      */
     public function show($id)
     {
-        Carbon::now()->format('MMM YYYY');
-        $date=array('');
-        $age = array(
-            ["date"=>'1506882600000', "unit"=>'437'],
-            ["date"=>'1507055400000', "unit"=>'137'],
-            ["date"=>'1507141800000', "unit"=>'327'],
-            ["date"=>'1507228200000', "unit"=>'357'],
-            ["date"=>'1507314600000', "unit"=>'347'],
-            ["date"=>'1507401000000', "unit"=>'378'],
-            ["date"=>'1507487400000', "unit"=>'376'],
-            ["date"=>'1507573800000', "unit"=>'375'],
-            ["date"=>'1507660200000', "unit"=>'337'],
-        );
-        $data=json_encode($age);
-        //  dd($data);
-        // response()->json(['data'=>$data]);
-        return view('admin.volumeChart',compact('data'));
+
+        return view('admin.volumeChart');
     }
 
     /**
@@ -105,20 +91,29 @@ class VolumeChartController extends Controller
     }
     public function getJsonData()
     {
-        $age = array(
-            ['date'=>1506882600000,'units'=>437],
-            ['date'=>1507055400000,'units'=>137],
-            ['date'=>1507141800000,'units'=>327],
-            ['date'=>1507228200000,'units'=>357],
-            ['date'=>1507314600000,'units'=>347],
-            ['date'=>1507401000000,'units'=>378],
-            ['date'=>1507487400000,'units'=>376],
-            ['date'=>1507573800000,'units'=>375],
-            ['date'=>1507660200000,'units'=>337],
+        $student=array(
+            array('student_name'=>"baqir",'marks'=>100),
+            array('student_name'=>"hussain",'marks'=>200),
+            array('student_name'=>"jaffar",'marks'=>11),
+            array('student_name'=>"ali",'marks'=>13),
+            array('student_name'=>"bilal",'marks'=>11),
+            array('student_name'=>"zain",'marks'=>17),
+            array('student_name'=>"haris",'marks'=>15),
         );
-        
-        $data=$age;
+        $employee=array(
+            array('student_name'=>"ad",'marks'=>313),
+            array('student_name'=>"asda",'marks'=>515),
+            array('student_name'=>"asda",'marks'=>645),
+            array('student_name'=>"aasda",'marks'=>654),
+            array('student_name'=>"asda",'marks'=>646),
+            array('student_name'=>"asd",'marks'=>542),
+            array('student_name'=>"ada",'marks'=>875),
+        );
 
-       return response()->json($data);
+
+
+
+         return response()->json(['student'=>$student,'employee'=>$employee]);
+
     }
 }
