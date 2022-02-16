@@ -13,7 +13,10 @@ class Invoice extends Model
             'invoice_description',
             'invoice_file',
             'user_id',
-            'created_at'
+            'created_at',
+            'updated_at',
+            'fuel_id',
+            'grand_total',
     ];
 
 

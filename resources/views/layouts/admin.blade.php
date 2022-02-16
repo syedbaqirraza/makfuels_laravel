@@ -19,7 +19,7 @@
 <body>
 @include('includes.admin_sidebar')
 <div class="page-heading">
-    <h3>Profile Statistics</h3>
+    <h3 class="text-center">Welcome To Dashboard Panel</h3>
 </div>
 <div class="page-content" style="min-height: 700px;">
     <section class="row">
@@ -36,9 +36,9 @@
                                                 <i class="iconly-boldShow"></i>
                                             </div>
                                         </div>
-                                        <div class="col-md-8">
+                                        <div class="col-md-8 align-self-md-center">
                                             <h6 class="text-muted font-semibold">Customer Profile</h6>
-                                            <h6 class="font-extrabold mb-0">112.000</h6>
+                                            {{-- <h6 class="font-extrabold mb-0">112.000</h6> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -54,12 +54,12 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="stats-icon blue">
-                                                <i class="iconly-boldProfile"></i>
+                                                <i class="iconly-boldChart"></i>
                                             </div>
                                         </div>
-                                        <div class="col-md-8">
+                                        <div class="col-md-8 align-self-md-center">
                                             <h6 class="text-muted font-semibold">Volume Chart</h6>
-                                            <h6 class="font-extrabold mb-0">183.000</h6>
+                                            {{-- <h6 class="font-extrabold mb-0">183.000</h6> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -75,12 +75,12 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="stats-icon green">
-                                            <i class="iconly-boldAdd-User"></i>
+                                            <i class="iconly-boldDocument"></i>
                                         </div>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-8 align-self-md-center">
                                         <h6 class="text-muted font-semibold">Accounting</h6>
-                                        <h6 class="font-extrabold mb-0">80.000</h6>
+                                        {{-- <h6 class="font-extrabold mb-0">80.000</h6> --}}
                                     </div>
                                 </div>
                             </div>

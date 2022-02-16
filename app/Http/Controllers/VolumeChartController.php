@@ -53,6 +53,7 @@ class VolumeChartController extends Controller
     public function show($id)
     {
 
+
         return view('admin.volumeChart');
     }
 
@@ -89,31 +90,37 @@ class VolumeChartController extends Controller
     {
         //
     }
-    public function getJsonData()
+    public function getJsonData(Request $request,$id)
     {
-        $student=array(
-            array('student_name'=>"baqir",'marks'=>100),
-            array('student_name'=>"hussain",'marks'=>200),
-            array('student_name'=>"jaffar",'marks'=>11),
-            array('student_name'=>"ali",'marks'=>13),
-            array('student_name'=>"bilal",'marks'=>11),
-            array('student_name'=>"zain",'marks'=>17),
-            array('student_name'=>"haris",'marks'=>15),
-        );
-        $employee=array(
-            array('student_name'=>"ad",'marks'=>313),
-            array('student_name'=>"asda",'marks'=>515),
-            array('student_name'=>"asda",'marks'=>645),
-            array('student_name'=>"aasda",'marks'=>654),
-            array('student_name'=>"asda",'marks'=>646),
-            array('student_name'=>"asd",'marks'=>542),
-            array('student_name'=>"ada",'marks'=>875),
-        );
 
+        $data=DB::table('invoices')
+        ->join('users','invoices.user_id','users.id')
+        ->where('invoices.created_at','>=',$request->dateRangeStart)
+        ->where('invoices.created_at','<=',$request->dateRangeEnd)
+        ->where('invoices.user_id',$_GET['id'])
+        ->select('invoices.created_at as date','invoices.grand_total as amount','users.*')
+        ->get();
 
-
-
-         return response()->json(['student'=>$student,'employee'=>$employee]);
+        //  dd($data);
+        // $student=array(
+        //     array('student_name'=>"baqir",'marks'=>100),
+        //     array('student_name'=>"hussain",'marks'=>200),
+        //     array('student_name'=>"jaffar",'marks'=>11),
+        //     array('student_name'=>"ali",'marks'=>13),
+        //     array('student_name'=>"bilal",'marks'=>11),
+        //     array('student_name'=>"zain",'marks'=>17),
+        //     array('student_name'=>"haris",'marks'=>15),
+        // );
+        // $employee=array(
+        //     array('student_name'=>"ad",'marks'=>313),
+        //     array('student_name'=>"asda",'marks'=>515),
+        //     array('student_name'=>"asda",'marks'=>645),
+        //     array('student_name'=>"aasda",'marks'=>654),
+        //     array('student_name'=>"asda",'marks'=>646),
+        //     array('student_name'=>"asd",'marks'=>542),
+        //     array('student_name'=>"ada",'marks'=>875),
+        // );
+        return response()->json($data);
 
     }
 }

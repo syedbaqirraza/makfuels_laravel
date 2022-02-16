@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-md-6 offset-md-3">
                         <form method="POST" enctype="multipart/form-data" action="{{ url('invoice') }}">
-                            @csrf
+                        @csrf
                         <div class="form-group">
                             <label for="basicInput">Select Invoice Type</label>
                             <select class="form-select" id="basicSelect" name="invoice_type">
@@ -37,8 +37,21 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="basicInput">Fule Type</label>
+                            <select class="form-select" id="fuel_id" name="fuel_id">
+                                <option value="">Choose</option>
+                                @foreach ($allFuel as $fuel)
+                                <option value="{{ $fuel->id }}">{{ $fuel->fuel_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="helpInputTop">Invoice Description</label>
                             <input type="text" class="form-control" id="helpInputTop" name="invoice_description">
+                        </div>
+                        <div class="form-group">
+                            <label for="helpInputTop">Invoice Grand Total</label>
+                            <input type="text" class="form-control" id="helpInputTop" name="grand_total">
                         </div>
                         <div class="form-group">
                             <label for="formFile" class="form-label">Select Invoice</label>
@@ -47,7 +60,7 @@
                         <div class="buttons">
                             <button type="submit" class="btn btn-success">Upload</a>
                         </div>
-                        @if ($errors->any())
+                        @if($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
                                     @foreach ($errors->all() as $error)

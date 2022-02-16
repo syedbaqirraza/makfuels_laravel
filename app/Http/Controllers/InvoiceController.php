@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fuel;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,13 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $allInvoices=Invoice::all();
+
+        $allInvoices=DB::table('invoices')
+        ->join('users','invoices.user_id','users.id')
+        ->join('fuels','invoices.fuel_id','fuels.id')
+        ->select('invoices.*','users.name as client_name','fuels.fuel_name as fuel_name')
+        ->get();
+
         return view('admin.list_invoice',compact('allInvoices'));
     }
 
@@ -30,7 +37,8 @@ class InvoiceController extends Controller
         ->join('users','clients.user_id','=','users.id')
         ->select('clients.*','users.*')
         ->get();
-        return view('admin.invoice',compact('clients'));
+        $allFuel=Fuel::all();
+        return view('admin.invoice',compact('clients','allFuel'));
     }
 
     /**
@@ -45,7 +53,9 @@ class InvoiceController extends Controller
             'invoice_type' => 'required',
             'invoice_description' => 'required',
             'invoice_file' => 'required|mimes:pdf,xlx,csv',
-            'user_id' => 'required'
+            'user_id' => 'required',
+            'grand_total' => 'required',
+            'fuel_id' => 'required'
         ]);
 
 
@@ -58,10 +68,12 @@ class InvoiceController extends Controller
             $destinationPath = base_path('public/files');
             $image->move($destinationPath, $image_name);
             $invoice = new Invoice([
-                'invoice_type'      =>  $request->get('invoice_type'),
-                'invoice_description'       =>  $request->get('invoice_description'),
+                'invoice_type'=>$request->get('invoice_type'),
+                'invoice_description'=>$request->get('invoice_description'),
                 'invoice_file'=>$image_name,
-                'user_id'=>$request->get('user_id')
+                'user_id'=>$request->get('user_id'),
+                'grand_total'=>$request->get('grand_total'),
+                'fuel_id'=>$request->get('fuel_id')
             ]);
             $invoice->save();
         }

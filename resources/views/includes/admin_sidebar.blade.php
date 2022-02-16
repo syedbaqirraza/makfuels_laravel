@@ -24,23 +24,23 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            <li class="sidebar-item  has-sub">
+            <li class="sidebar-item has-sub">
                 <a href="#" class='sidebar-link' style="background-color: #435ebe;">
                     <i class="bi bi-stack text-white"></i>
                     <span class="text-white">User</span>
                 </a>
                 <ul class="submenu">
-                    <li class="submenu-item ">
+                    <li class="submenu-item">
                         <a href="{{ url('users') }}">All Users</a>
                     </li>
                 </ul>
             </li>
-            <li class="sidebar-item  has-sub">
+            <li class="sidebar-item has-sub">
                 <a href="#" class='sidebar-link' style="background-color: #435ebe;">
                     <i class="bi bi-stack color-white text-white" ></i>
                     <span class="text-white">Client</span>
                 </a>
-                <ul class="submenu ">
+                <ul class="submenu">
                     <li class="submenu-item ">
                         <a href="{{ route('client.create') }}">Add New Client</a>
                     </li>
@@ -54,12 +54,26 @@
                     <i class="bi bi-file-earmark-medical-fill text-white"></i>
                     <span class="text-white">Invoice</span>
                 </a>
-                <ul class="submenu">
+                <ul class="submenu pl-1">
                     <li class="submenu-item">
                         <a href="{{ url('invoice/create') }}">Upload Invoice</a>
                     </li>
                     <li class="submenu-item">
                         <a href="{{ url('invoice') }}">All Invoice</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link' style="background-color: #435ebe;">
+                    <i class="bi bi-file-earmark-medical-fill text-white"></i>
+                    <span class="text-white">Fuels</span>
+                </a>
+                <ul class="submenu">
+                    <li class="submenu-item">
+                        <a href="{{ route('fuel.index') }}">All Fuel</a>
+                    </li>
+                    <li class="submenu-item">
+                        <a href="{{ route('fuel.create') }}">Add Fuel</a>
                     </li>
                 </ul>
             </li>
@@ -128,7 +142,7 @@
 
                 <button type="submit" onclick="window.location.href='{{ url('/') }}'" class='w-100 btn btn-info' style="text-align: start; background-color: #435ebe; color:white;"><i class="bi bi-box-arrow-left" style="font-size:20px; font-weight:800;color:white;   margin: 7px 13px 0px 0px;"></i>  Back To Website</button>
 
-        </li>
+            </li>
         @endif
    </ul>
 </div>

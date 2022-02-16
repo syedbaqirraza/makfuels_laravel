@@ -30,6 +30,8 @@
                                 <th>Invoice Type</th>
                                 <th>Invoice Description</th>
                                 <th>Invoice Created At</th>
+                                <th>Fuel</th>
+                                <th>Invoice Total</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -39,6 +41,8 @@
                                     <td>{{ $invoice->invoice_type }}</td>
                                     <td>{{ $invoice->invoice_description }}</td>
                                     <td>{{ $invoice->created_at }}</td>
+                                    <td>{{ $invoice->fuel_name }}</td>
+                                    <td>{{ $invoice->grand_total }}</td>
                                     <td><button class="btn btn-success" onclick="window.location.href='{{ url('invoice/'.$invoice->id) }}'">view</button></td>
                                     {{-- @if ($user->active==1)
                                         <td><button class="btn btn-success" onclick="window.location.href='{{ route('/') }}'">Active</button></td>
