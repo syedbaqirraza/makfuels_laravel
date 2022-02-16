@@ -18,6 +18,7 @@
         <div class="row">
             <canvas id="graphCanvas" style="width:100%; height:300px;"></canvas>
         </div>
+        <input type="hidden" value="{{ $id }}" id="uid" >
 </section>
 
 
@@ -56,14 +57,14 @@ function formatDate(date) {
 
 function showGraph(dateRangeStart,dateRangeEnd)
 {
+    var uid=$("#uid").val();
     $.post("{{ route('getJsonData') }}",
-    {'dateRangeStart':dateRangeStart,'dateRangeEnd':dateRangeEnd},
+    {'dateRangeStart':dateRangeStart,'dateRangeEnd':dateRangeEnd,'uid':uid},
     function (data)
     {
         var name = [];
         var marks = [];
         for (var i in data) {
-
             name.push(formatDate(data[i].date));
             marks.push(data[i].amount);
         }
@@ -71,7 +72,7 @@ function showGraph(dateRangeStart,dateRangeEnd)
             labels: name,
             datasets: [
                 {
-                    label: 'Student Marks',
+                    label:'Fule Sale',
                     backgroundColor: '#2C2625',
                     borderColor: '#46d5f1',
                     hoverBackgroundColor: '#CCCCCC',
@@ -81,10 +82,7 @@ function showGraph(dateRangeStart,dateRangeEnd)
             ]
         };
         var graphTarget = $("#graphCanvas");
-        var barGraph = new Chart(graphTarget, {
-            type: 'bar',
-            data: chartdata
-        });
+        var barGraph = new Chart(graphTarget, { type: 'bar', data: chartdata });
     });
 
 }
