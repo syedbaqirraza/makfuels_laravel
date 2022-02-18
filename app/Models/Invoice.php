@@ -17,6 +17,7 @@ class Invoice extends Model
             'updated_at',
             'fuel_id',
             'grand_total',
+            'total_gallon',
     ];
 
 
@@ -24,4 +25,7 @@ class Invoice extends Model
     {
         return strtoupper($value);
     }
+    protected $casts = [
+        'created_at' => 'date:m-d-Y',
+    ];
 }

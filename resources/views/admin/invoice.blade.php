@@ -54,6 +54,10 @@
                             <input type="text" class="form-control" id="helpInputTop" name="grand_total">
                         </div>
                         <div class="form-group">
+                            <label for="helpInputTop">Total Gallons</label>
+                            <input type="text" class="form-control" id="helpInputTop" name="total_gallon">
+                        </div>
+                        <div class="form-group">
                             <label for="formFile" class="form-label">Select Invoice</label>
                             <input class="form-control" type="file" id="formFile" name="invoice_file">
                         </div>

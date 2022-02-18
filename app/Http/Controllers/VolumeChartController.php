@@ -92,11 +92,28 @@ class VolumeChartController extends Controller
     {
         $data=DB::table('invoices')
         ->join('users','invoices.user_id','users.id')
+        ->join('fuels','invoices.fuel_id','fuels.id')
         ->where('invoices.created_at','>=',$request->dateRangeStart)
         ->where('invoices.created_at','<=',$request->dateRangeEnd)
         ->where('invoices.user_id',$request->uid)
-        ->select('invoices.created_at as date','invoices.grand_total as amount','users.*')
+        ->select('invoices.created_at','invoices.total_gallon','invoices.grand_total as amount','users.name','fuels.fuel_name')
         ->get();
-        return response()->json($data);
+
+        $dataMarge=array();
+
+        foreach($data as $val)
+        {
+            $value=array();
+
+            $datefc = $val->created_at;
+            $date=date('m-d-Y', strtotime($datefc));
+            $fule_date = $date." ".$val->fuel_name;
+
+            array_push($value,$fule_date,$val->total_gallon,$val->amount);
+            array_push($dataMarge,$value);
+
+        }
+
+         return response()->json($dataMarge);
     }
 }

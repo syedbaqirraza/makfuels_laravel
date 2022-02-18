@@ -14,7 +14,6 @@
 
 <div class="page-content">
     <div class="page-heading">
-
         <section class="section">
             <div class="card">
 
@@ -29,7 +28,6 @@
                     </embed>
                 </div>
             </div>
-
         </section>
     </div>
 </div>

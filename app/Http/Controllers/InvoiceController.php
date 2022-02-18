@@ -65,7 +65,8 @@ class InvoiceController extends Controller
             'invoice_file' => 'required|mimes:pdf,xlx,csv',
             'user_id' => 'required',
             'grand_total' => 'required',
-            'fuel_id' => 'required'
+            'fuel_id' => 'required',
+            'total_gallon' => 'required'
         ]);
 
 
@@ -83,7 +84,8 @@ class InvoiceController extends Controller
                 'invoice_file'=>$image_name,
                 'user_id'=>$request->get('user_id'),
                 'grand_total'=>$request->get('grand_total'),
-                'fuel_id'=>$request->get('fuel_id')
+                'fuel_id'=>$request->get('fuel_id'),
+                'total_gallon'=>$request->get('total_gallon')
             ]);
             $invoice->save();
         }
