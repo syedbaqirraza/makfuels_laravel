@@ -25,6 +25,16 @@ class InvoiceController extends Controller
 
         return view('admin.list_invoice',compact('allInvoices'));
     }
+    public function single_user_invoice($id)
+    {
+        $allInvoices=DB::table('invoices')
+        ->join('users','invoices.user_id','users.id')
+        ->join('fuels','invoices.fuel_id','fuels.id')
+        ->select('invoices.*','users.name as client_name','fuels.fuel_name as fuel_name')
+        ->where('invoices.user_id',$id)
+        ->get();
+        return view('admin.single_client_invoice',compact('allInvoices'));
+    }
 
     /**
      * Show the form for creating a new resource.

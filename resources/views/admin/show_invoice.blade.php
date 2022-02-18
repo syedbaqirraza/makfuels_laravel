@@ -8,7 +8,7 @@
 @section('contents')
 <div class="page-heading">
     <h3>View Invoices</h3>
-<button class="btn btn-success" onclick="window.location.href='{{ url('invoice') }}'">Go Back</button>
+<button class="btn btn-success" onclick="window.location.href='{{ url()->previous() }}'">Go Back</button>
 
 </div>
 

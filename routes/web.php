@@ -47,4 +47,5 @@ Route::resource('invoice', InvoiceController::class);
 Route::resource('users', UserController::class);
 Route::resource('client', ClientController::class);
 Route::get('/chart','App\Http\Controllers\ClientController@client_chart')->name('chart');
+Route::get('/user/invoice/{id}','App\Http\Controllers\InvoiceController@single_user_invoice')->name('user.invoice');
 Route::post('/getJsonData','App\Http\Controllers\VolumeChartController@getJsonData')->name('getJsonData');

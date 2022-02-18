@@ -63,9 +63,13 @@
                                                 <p class=" mb-0">{{ $client->address }}</p>
                                             </td>
                                         </tr>
+
+
                                     </tbody>
                                 </table>
                             </div>
+                            <button onclick="window.location.href='{{route('user.invoice',['id'=>$client->user_id])}}'" class="btn-block btn-success">View Chart</button>
+
                         </div>
                     </div>
                 </div>

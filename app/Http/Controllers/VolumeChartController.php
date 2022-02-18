@@ -52,8 +52,6 @@ class VolumeChartController extends Controller
      */
     public function show($id)
     {
-
-
         return view('admin.volumeChart',compact('id'));
     }
 
@@ -92,7 +90,6 @@ class VolumeChartController extends Controller
     }
     public function getJsonData(Request $request)
     {
-
         $data=DB::table('invoices')
         ->join('users','invoices.user_id','users.id')
         ->where('invoices.created_at','>=',$request->dateRangeStart)
