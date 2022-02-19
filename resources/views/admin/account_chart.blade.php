@@ -1,3 +1,7 @@
+
+
+
+
 @extends('layouts.admin')
 
 @section('title')
@@ -5,120 +9,127 @@
 @endsection
 
 @section('contents')
+<form action="{{ route('fillterAccountChart') }}" method="post">
+    @csrf
+<section class="bootstrap-select">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="row">
+                                <div class="col-md-3">
+                                    <fieldset class="form-group">
+                                        From Month:
+                                        <select class="form-select" name="startDate" id="basicSelect" required>
+                                            <option value="1" selected>January</option>
+                                            <option value="2">February</option>
+                                            <option value="3">March</option>
+                                            <option value="4">April</option>
+                                            <option value="5">May</option>
+                                            <option value="6">June</option>
+                                            <option value="7">July</option>
+                                            <option value="8">August</option>
+                                            <option value="9">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-3">
+                                    <fieldset class="form-group">
+                                        To Month:
+                                        <select class="form-select" name="endDate" id="basicSelect" required>
+                                            <option value="1" >January</option>
+                                            <option value="2">February</option>
+                                            <option value="3">March</option>
+                                            <option value="4">April</option>
+                                            <option value="5">May</option>
+                                            <option value="6">June</option>
+                                            <option value="7">July</option>
+                                            <option value="8">August</option>
+                                            <option value="9">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12" selected>December</option>
+                                        </select>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-3">
+
+                                    <fieldset class="form-group">
+                                        Year
+                                        <select required name="year" class="form-select" required>
+                                            <option value="2022" selected>2022</option>
+                                            <option value="2023">2023</option>
+                                            <option value="2024">2024</option>
+                                            <option value="2025">2025</option>
+                                        </select>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-3">
+                                    <fieldset class="form-group mt-4">
+                                        <input type="hidden" value="{{ $id }}" name="uid" id="uid" required>
+                                        <input type="submit" class="btn btn-success" value="Apply Filter">
+                                    </fieldset>
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</form>
 
 <section class="row">
-    <div class="col-12 col-lg-12">
-        <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
-            <i class="fa fa-calendar"></i>&nbsp; <span></span> <i class="fa fa-caret-down"></i>
-        </div>
+    <div class="col-12">
         <div class="row">
-            <div class="col-12">
-                <div id="chart_div" style="min-height:600px; width:100%;"></div>
+            <div class="col-12 ">
+                <div id="barchart_material" style="min-height:600px; width:100%; "></div>
             </div>
-
         </div>
-        <input type="hidden" value="{{ $id }}" id="uid" >
 </section>
 
 @endsection
 
-@section('style')
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
-@endsection
-
 @section('script')
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 <script>
 
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
 
+google.charts.load('current', {'packages':['bar']});
+google.charts.setOnLoadCallback(drawChart);
 
-$(document).ready(function(){
-    var start = moment().subtract(29, 'days');
-    var end = moment();
-    function cb(start, end) {
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-        google.charts.load('current', {packages: ['corechart', 'bar']});
-        google.charts.setOnLoadCallback(drawBarColors(start.format('YYYY-MM-DD HH:mm:ss'),end.format('YYYY-MM-DD HH:mm:ss')));
+function drawChart() {
+var data = google.visualization.arrayToDataTable([
+    ['Monthly Accounts Chart', 'Gallons', 'Invoice Total'],
 
-    }
-    $('#reportrange').daterangepicker({
-        startDate: start,
-        endDate: end,
-        ranges: {
-        'Today': [moment(), moment()],
-        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-        'This Month': [moment().startOf('month'), moment().endOf('month')],
-        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+    @php
+        foreach($orders as $order) {
+            echo "['".$order[0]."', ".intval($order[1]).", ".strval($order[2])."],";
         }
-    }, cb);
+    @endphp
+]);
 
-    cb(start, end);
+var options = {
+    title: 'Monthly Accounts Chart',
 
-
-});
-
-
-function drawBarColors(start,end)
-{
-
-    var uid=$("#uid").val();
-    $.ajax({
-        type:'POST',
-        url:"{{ route('getJsonAccount') }}",
-        data:{'dateRangeStart':start,'dateRangeEnd':end,'uid':uid},
-        success:function(dataget)
-        {
-            var da=[];
-            da.push(['Sale','Gallon','Invoice Total']);
-            var entries = Object.entries(dataget);
-            for(var i in entries)
-            {
-                da.push([entries[i][1][0],entries[i][1][1],entries[i][1][2]]);
-            }
-            var data = google.visualization.arrayToDataTable(da);
-
-            var options = {
-                title: '{{$user_name}} Account Chart',
-                chartArea: {width:'55%',height:'80%'},
-                colors: ['#FFC300', '#820D9C'],
-                hAxis: {
-                    minValue: 0
-                }
-            };
-            var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
-            chart.draw(data, options);
-        }
-    });
+bars: 'horizontal',
+hAxis: {
+      title: '',
+      minValue: 0
+    },
+    vAxis: {
+      title: ''
+    }
+};
+var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+chart.draw(data, google.charts.Bar.convertOptions(options));
 }
 
 </script>
 @endsection
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

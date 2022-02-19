@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -50,12 +51,81 @@ class AccountController extends Controller
      */
     public function show($id)
     {
+
+        $start="1";
+        $end="12";
+        $year=Carbon::now()->format('Y');
+
+        $data=DB::table('invoices')
+        ->join('users','invoices.user_id','users.id')
+        ->join('fuels','invoices.fuel_id','fuels.id')
+        ->where('invoices.user_id',$id)
+        ->whereYear('invoices.created_at','=',$year)
+        ->whereMonth('invoices.created_at','>=',$start)
+        ->whereMonth('invoices.created_at','<=',$end)
+        ->select(
+                DB::raw('sum(grand_total) as amount'),
+                DB::raw('sum(total_gallon) as total_gallon'),
+                DB::raw('MONTH(invoices.created_at) month')
+            )
+        ->groupby('month')
+        ->get();
+
+        $orders=array();
+        foreach($data as $val)
+        {
+
+            $value=array();
+            $monthNum  = $val->month;
+            $date= date('F', mktime(0, 0, 0, $monthNum, 10));
+
+            array_push($value,$date,intval($val->total_gallon),intval($val->amount));
+            array_push($orders,$value);
+
+        }
         $name=auth()->user()->name;
         $user_name=strtoupper($name);
-        return view('admin.account_chart',compact('id','user_name'));
+        return view('admin.account_chart',compact('id','user_name','orders'));
 
     }
+    public function fillterAccountChart(Request $request)
+    {
+        $start=$request->startDate;
+        $end=$request->endDate;
+        $id=$request->uid;
+        $year=$request->year;
 
+        $data=DB::table('invoices')
+        ->join('users','invoices.user_id','users.id')
+        ->join('fuels','invoices.fuel_id','fuels.id')
+        ->where('invoices.user_id',$id)
+        ->whereYear('invoices.created_at','=',$year)
+        ->whereMonth('invoices.created_at','>=',$start)
+        ->whereMonth('invoices.created_at','<=',$end)
+        ->select(
+                DB::raw('sum(grand_total) as amount'),
+                DB::raw('sum(total_gallon) as total_gallon'),
+                DB::raw('MONTH(invoices.created_at) month')
+            )
+        ->groupby('month')
+        ->get();
+
+        $orders=array();
+        foreach($data as $val)
+        {
+
+            $value=array();
+            $monthNum  = $val->month;
+            $date= date('F', mktime(0, 0, 0, $monthNum, 10));
+
+            array_push($value,$date,intval($val->total_gallon),intval($val->amount));
+            array_push($orders,$value);
+
+        }
+        $name=auth()->user()->name;
+        $user_name=strtoupper($name);
+        return view('admin.account_chart',compact('id','user_name','orders'));
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -112,7 +182,6 @@ class AccountController extends Controller
     }
     public function getJsonData(Request $request)
     {
-
         $data=DB::table('invoices')
         ->join('users','invoices.user_id','users.id')
         ->join('fuels','invoices.fuel_id','fuels.id')
@@ -121,7 +190,6 @@ class AccountController extends Controller
         ->where('invoices.user_id',$request->uid)
         ->select('invoices.created_at','invoices.total_gallon','invoices.grand_total as amount','users.name','fuels.fuel_name')
         ->get();
-
 
         $dataMarge=array();
         foreach($data as $val)

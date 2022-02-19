@@ -50,6 +50,8 @@ Route::resource('client', ClientController::class);
 Route::resource('account', AccountController::class);
 Route::get('/chart','App\Http\Controllers\ClientController@client_chart')->name('chart');
 Route::get('/user/invoice/{id}','App\Http\Controllers\InvoiceController@single_user_invoice')->name('user.invoice');
-Route::post('/getJsonData','App\Http\Controllers\VolumeChartController@getJsonData')->name('getJsonData');
-Route::post('/getJsonAccount','App\Http\Controllers\AccountController@getJsonData')->name('getJsonAccount');
+
 Route::get('/da','App\Http\Controllers\AccountController@da')->name('da');
+
+Route::post('/fillterVolumeChart','App\Http\Controllers\VolumeChartController@fillterVolumeChart')->name('fillterVolumeChart');
+Route::post('/fillterAccountChart','App\Http\Controllers\AccountController@fillterAccountChart')->name('fillterAccountChart');
