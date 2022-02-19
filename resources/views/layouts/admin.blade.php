@@ -69,23 +69,23 @@
 
 
                     <div class="col-4 col-lg-4 col-md-4">
-                        <a href="#">
-                        <div class="card">
-                            <div class="card-body px-3 py-4-5">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="stats-icon green">
-                                            <i class="iconly-boldDocument"></i>
+                        <a href="{{ route('account.index') }}">
+                            <div class="card">
+                                <div class="card-body px-3 py-4-5">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="stats-icon green">
+                                                <i class="iconly-boldDocument"></i>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-8 align-self-md-center">
-                                        <h6 class="text-muted font-semibold">Accounting</h6>
-                                        {{-- <h6 class="font-extrabold mb-0">80.000</h6> --}}
+                                        <div class="col-md-8 align-self-md-center">
+                                            <h6 class="text-muted font-semibold">Accounting</h6>
+                                            {{-- <h6 class="font-extrabold mb-0">80.000</h6> --}}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
                     </div>
 
             </div>

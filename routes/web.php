@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
@@ -46,6 +47,9 @@ Route::resource('fuel', FuelController::class);
 Route::resource('invoice', InvoiceController::class);
 Route::resource('users', UserController::class);
 Route::resource('client', ClientController::class);
+Route::resource('account', AccountController::class);
 Route::get('/chart','App\Http\Controllers\ClientController@client_chart')->name('chart');
 Route::get('/user/invoice/{id}','App\Http\Controllers\InvoiceController@single_user_invoice')->name('user.invoice');
 Route::post('/getJsonData','App\Http\Controllers\VolumeChartController@getJsonData')->name('getJsonData');
+Route::post('/getJsonAccount','App\Http\Controllers\AccountController@getJsonData')->name('getJsonAccount');
+Route::get('/da','App\Http\Controllers\AccountController@da')->name('da');

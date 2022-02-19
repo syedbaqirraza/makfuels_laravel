@@ -52,7 +52,9 @@ class VolumeChartController extends Controller
      */
     public function show($id)
     {
-        return view('admin.volumeChart',compact('id'));
+        $name=auth()->user()->name;
+        $user_name=strtoupper($name);
+        return view('admin.volumeChart',compact('id','user_name'));
     }
 
     /**
@@ -100,20 +102,15 @@ class VolumeChartController extends Controller
         ->get();
 
         $dataMarge=array();
-
         foreach($data as $val)
         {
             $value=array();
-
             $datefc = $val->created_at;
-            $date=date('m-d-Y', strtotime($datefc));
-            $fule_date = $date." ".$val->fuel_name;
-
-            array_push($value,$fule_date,$val->total_gallon,$val->amount);
+            $date=date('M-d-Y', strtotime($datefc));
+            $fule_date = $val->fuel_name." - ".$date;
+            array_push($value,$fule_date,intval($val->total_gallon),intval($val->amount));
             array_push($dataMarge,$value);
-
         }
-
-         return response()->json($dataMarge);
+        return response()->json($dataMarge);
     }
 }
